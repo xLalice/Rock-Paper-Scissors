@@ -18,15 +18,8 @@ function startRound(playerSelection){
     let computerSelection= getComputerChoice();
     const computerChoice = document.getElementById(computerSelection);
 
-    ~
-    if (playerScore >= bestOf || computerScore >= bestOf){
-        playerScore = 0;
-        computerScore = 0;
-        playerScoreCont.textContent = playerScore;
-        comScoreCont.textContent = computerScore;
-        return;
-    }
-    else if (
+    
+    if (
         (playerSelection === "Rock" && computerSelection === "Scissors") ||
         (playerSelection === "Scissors" && computerSelection === "Paper") ||
         (playerSelection === "Paper" && computerSelection === "Rock")
@@ -40,6 +33,17 @@ function startRound(playerSelection){
         result.textContent = `You lose! ${computerSelection} beats ${playerSelection}`;
         computerScore += 1;
         comScoreCont.textContent = computerScore;
+    }
+
+    if (playerScore >= bestOf || computerScore >= bestOf){
+        let winner = playerScore > computerScore ? "Win" : "Lose";
+        result.textContent = `Game Over! You ${winner}`;
+        playerScore = 0;
+        computerScore = 0;
+        playerScoreCont.textContent = playerScore;
+        comScoreCont.textContent = computerScore;
+        
+        return;
     }
 }
 
