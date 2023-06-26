@@ -1,45 +1,60 @@
+let playerScore = 0;
+let computerScore = 0;
+const bestOf = 5;
+const playerScoreCont = document.getElementById("player-score");
+const comScoreCont = document.getElementById("computer-score");
+const result = document.getElementById("result");
+const buttons = document.querySelectorAll("button");
+
+
 function getComputerChoice(){
-    const choices = ["Rock", "Scissors", "Papers"];
+    const choices = ["Rock", "Scissors", "Paper"];
     return choices[Math.floor(Math.random()* 3)];
 } 
 
-function startRound(player, computer){
-    let playerSelection = player.toLowerCase();
-    let computerSelection= computer.toLowerCase();
-    if (
-        (playerSelection === "rock" && computerSelection === "scissors") ||
-        (playerSelection === "scissors" && computerSelection === "paper") ||
-        (playerSelection === "paper" && computerSelection === "rock")
+
+
+function startRound(playerSelection){
+    let computerSelection= getComputerChoice();
+    const computerChoice = document.getElementById(computerSelection);
+
+    ~
+    if (playerScore >= bestOf || computerScore >= bestOf){
+        playerScore = 0;
+        computerScore = 0;
+        playerScoreCont.textContent = playerScore;
+        comScoreCont.textContent = computerScore;
+        return;
+    }
+    else if (
+        (playerSelection === "Rock" && computerSelection === "Scissors") ||
+        (playerSelection === "Scissors" && computerSelection === "Paper") ||
+        (playerSelection === "Paper" && computerSelection === "Rock")
     ) {
-        return `You win! ${playerSelection} beats ${computerSelection}`;
+        result.textContent =  `You win! ${playerSelection} beats ${computerSelection}`;
+        playerScore += 1;
+        playerScoreCont.textContent = playerScore;
     } else if (computerSelection === playerSelection){
-        return "Draw"
+        result.textContent = "Draw";
     } else {
-        return "You lose"
+        result.textContent = `You lose! ${computerSelection} beats ${playerSelection}`;
+        computerScore += 1;
+        comScoreCont.textContent = computerScore;
     }
 }
 
 
+    
 
-function game(){
-    //Record the scores of the player and the computer
-    let playerScore = 0;
-    let computerScore = 0;
-
-    //If either one reach 5, the game is over, until then keep playing
-    while (playerScore != 5 && computerScore != 5) {
-        let playerChoice = prompt("Enter your weapon");
-        let computerChoice = getComputerChoice();
-        console.log(playerChoice);
-        let result = startRound(playerChoice, computerChoice);
-        console.log(result);
-        if (result.includes("win")) {
-            playerScore += 1;
-        } else if (result.includes("lose")) {
-            computerScore+= 1;
-        }
-        console.log(`You: ${playerScore}   Computer: ${computerScore}`)
-    }
+// Event listener setup
+function setupEventListeners() {
+    buttons.forEach(button => {
+        button.addEventListener("click", () => {
+            startRound(button.id);
+        });
+    });
 }
 
-game();
+// Call the function to set up event listeners
+setupEventListeners();
+
