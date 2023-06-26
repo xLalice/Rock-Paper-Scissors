@@ -24,10 +24,12 @@ body {
     justify-content: center;
     align-items: center;
 }
+
 button {
     height: 50%;
     width: 25%;
     border: none;
+    background-color: #949398FF;
 }
 
 button:hover {
